@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas</title>
+
+        <link rel="shortcut icon" href="https://icon-library.com/images/microsoft-office-365-icon/microsoft-office-365-icon-5.jpg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    .table{
+      width: 60vw;
+    }
+
+    body{
+      background-color: #f8f9fa;
+    }
+
+    .centro{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .titulo{
+      width: 60vw;
+    }
+
+    .botaoNovo{
+      height: 50px;
+    }
+
+
+  </style>
+
+</head>
+<body >
+    <br>
+    <div class="centro">
+
+      <div class="titulo">
+        <div class="container-md">
+          <div class="row">
+            <div class="col">
+            <div class="col-2" id="menu">
+          </div>
+                <h1><img src="https://static.vecteezy.com/system/resources/thumbnails/007/211/472/small/receipt-illustration-on-a-background-premium-quality-symbols-icons-for-concept-and-graphic-design-vector.jpg" alt="" srcset="" height="35px" style="margin: 10px;">Registrar venda</h1>
+                
+            </div>
+            
+
+            <div class="col d-flex justify-content-end">
+  <button type="button" class="btn btn-outline-primary neg botaoNovo"  onclick="novo()">
+  <i class="bi bi-plus-circle"> </i> NOVO
+  </button>
+
+            </div>
+        </div>
+<br>
+        <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">
+    Pesquisa por NF
+  </span>
+  <input type="text" class="form-control" id="txtpesquisa" aria-label="Username" aria-describedby="basic-addon1">
+  <button class="btn btn-outline-primary" onclick="listar()">
+  Pesquisar
+  </button>
+</div>
+
+
+<hr>
+<br>
+
+</div>
+</div>
+  </div>
+
+  <div class="">
+<div class="centro">
+
+  <table class="table table-hover shadow p-3 mb-5 bg-body-tertiary rounded ">
+      <tr>
+          <th class="col">Venda</th>
+          <th class="col">Número NF</th>
+          <th class="col">Data</th>
+          <th class="col">Quantidade</th>
+          <th class="col">Valor</th>
+          <th class="col">Comissão</th>
+          <th class="col">Produto</th>
+          <th class="col">Cliente</th>
+          <th class="col">Vendedor</th>
+          <th class="col"></th>
+      </tr>
+      <tbody id="lista">
+
+        <!-- <tr >
+            <td>1</td>
+            <td>00000000</td>
+            <td>20/10/2024</td>
+            <td>20.00</td>
+            <td>10.00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>
+                <button class="btn btn-outline-success"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </td>
+        </tr> -->
+
+      </tbody>
+
+  </table>
+
+  </div>
+</div>
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalAlterar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Inserir dados -->
+
+
+
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-receipt-cutoff"></i></span>
+  </div>
+  <input type="text" class="form-control" placeholder="Número NF" aria-label="Username" aria-describedby="basic-addon1" id="txtNumeronf">
+</div>
+
+
+
+
+
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar3"></i></span>
+  </div>
+  <input type="date" class="form-control" placeholder="Data" aria-label="Username" aria-describedby="basic-addon1" id="txtData">
+</div>
+
+
+
+
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-123"></i></span>
+  </div>
+  <input type="number" class="form-control" placeholder="Quantidade" aria-label="Username" aria-describedby="basic-addon1" id="txtQuantidade">
+</div>
+
+
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-cash-coin"></i></i></span>
+  </div>
+
+  <input type="number" class="form-control" placeholder="Valor" aria-label="Username" aria-describedby="basic-addon1" id="txtValor">
+</div>
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-plus-fill"></i></span>
+  </div>
+  <input type="number" class="form-control" placeholder="Comissão" aria-label="Username" aria-describedby="basic-addon1" id="txtComissao">
+</div>
+
+
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="bi bi-box"></i></span>
+    </div>
+  <select class="form-select" id="txtIdproduto">
+    <option value="" disabled selected>Id produto</option>
+    <option value="1">Coca-Cola</option>
+    <option value="2">Pepsi</option>
+    <option value="3">Doritos</option>
+    <option value="4">Fandangos</option>
+  </select>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+    </div>
+  <select class="form-select" id="txtIdcliente">
+    <option value="" disabled selected>Id cliente</option>
+    <option value="1">Jéssica Teixeira</option>
+    <option value="2">Julio Costa</option>
+    <option value="3">Amanda Pádua</option>
+    <option value="4">Weligton Medeiros</option>
+  </select>
+
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard"></i></span>
+    </div>
+  <select class="form-select" id="txtIdvendedor">
+    <option value="" disabled selected>Id vendedor</option>
+    <option value="1">Walter Costa</option>
+    <option value="2">Jefferson Silva</option>
+    <option value="3">Maria Pereira</option>
+    <option value="4">Helena Prado</option>
+  </select>
+</div>
+
+
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-outline-primary" onclick="salvar()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Excluir -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-trash3-fill"></i>&nbsp;&nbsp;Deletar para sempre cadastro</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+           Tem certeza que deseja excluir???
+           <br>
+           <h1>
+             <b>Pense bem!!!!</b>
+           </h1>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" onclick="excluirSim()">Sim</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Não</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+      <script src="venda.js"></script>
+      <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vendedor</title>
+    <script src="https://kit.fontawesome.com/af6461ac32.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+      .modal-title i {
+      margin-right: 400px; /* Ajuste o valor conforme necessário para o espaçamento desejado */
+      }
+      .input-group-text {
+        background-color: black;
+        color: white;
+        height:40px;
+        min-width: 35px;
+        
+      }
+      h1 {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-size: 36px;
+        font-weight: bold;
+        margin-top: 50px;
+      }
+      .btn-custom {
+        margin-top: 20px;
+        margin-right: 310px;
+        margin-bottom: 10px;
+        text-align: right;
+      }
+        .cID{
+          width:5%;
+          text-align: center;
+        }
+        .cCPF{
+          width:15%;
+          text-align: center;
+        }
+        .cBAIRRO{
+          width:10%;
+          text-align: center;
+        }
+        .cLOG{
+          width:10%;
+          text-align: center;
+        }
+  
+        .cNUM{
+          width: 5%;
+          text-align: center;
+        }
+        .cTELEFONE{
+          width: 15%;
+          text-align: center;
+        }
+        .cNOME{
+          width: 15%;
+          text-align: center;
+        }
+        .cCEP{
+          width:10%;
+          text-align: center;
+        }
+        .cPERC{
+          width: 10%;
+          text-align: center;
+        }
+          /* Estilos para o cabeçalho da tabela */
+          .table-hover thead th{
+            background-color:BLACK;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            
+          }
+          .table-hover{
+            border-collapse: collapse;
+            text-align: center;
+            width: 100%
+          }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+          <div class="col-2" id="menu">
+          </div>
+            <div class="col-8">
+                <h1><i class="fa-solid fa-id-card"></i> Cadastro de Vendedores</h1>
+            </div>
+            <div class="btn-custom justify-content-end" >
+              <button type="button"
+                      class="btn btn-dark" 
+                      onclick="novo()"><i class="fa-regular fa-square-plus"></i>
+                  Novo
+                </button>
+          </div>
+           
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">
+            Pesquisa:
+          </span>
+          <input type="text" class="form-control" 
+          id="txtpesquisa" aria-label="Username" 
+          aria-describedby="basic-addon1">
+          <button type="button"
+                  class="btn btn-dark" 
+                  onclick="listar()"><i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+
+        <hr/>
+
+
+
+        <table class="table table-hover">
+            <thead>
+                <th class="cID">ID</th>
+                <th class="cNOME">NOME</th>
+                <th class="cCPF">CPF</th>
+                <th class="cLOG">LOGRADOURO</th>
+                <th class="cNUM">NÚMERO</th>
+                <th class="cBAIRRO">BAIRRO</th>
+                <th class="cCEP">CEP</th>
+                <th class="cTELEFONE">TELEFONE</th> 
+                <th class="cPERC">PERCENTUAL COMISSÃO</th>
+                <th class ="cIDCID">ID CIDADE</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody id="lista">
+
+            </tbody>
+        </table>
+    </div>
+
+
+ 
+<!-- Modal -->
+<div class="modal fade" id="modalAlterar" 
+tabindex="-1" aria-labelledby="exampleModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h1 class="modal-title" id="exampleModalLabel"></h1>
+    
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-pretend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-pencil"></i></span>
+              </div>
+                <input type="text" class="form-control"  placeholder="Nome Vendedor"
+                id="txtnome" aria-label="Username" aria-describedby="basic-addon1">
+              
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-pretend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-address-card"></i></span>
+                </div>
+                <input type="text" class="form-control" placeholder="CPF"
+                id="txtcpf" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-pretend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house-chimney-user"></i></span>
+              </div>
+                <input type="text" class="form-control" placeholder="Logradouro"
+                id="txtlogradouro" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-pretend">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-123"></i></span>
+                </div>
+                <input type="number" class="form-control" placeholder="Número Residêncial"
+                id="txtnumero" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-dot"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Bairro"
+              id="txtbairro" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-arrow"></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="CEP"
+            id="txtcep" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-pretend">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-mobile-screen-button"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Telefone"
+          id="txttelefone" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-pretend">
+        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-percent"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Percentual de Comissão"
+        id="perc_comissao" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-pretend">
+      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-tree-city"></i></span>
+      </div>
+      <select class="form-select" id="idcidade" aria-label="Username" aria-describedby="basic-addon1">
+        <option value="" disabled selected> ID Cidade</option>
+        <option value="1">SÃO SEBASTÃO DO PARAISO - MG</option>
+        <option value="2">JACUÍ - MG </option>
+        <option value="3">SÃO TOMAS DE AQUINO - MG</option>
+        <option value="4">RIBEIRÃO PRETO - SP </option>
+        <option value="5">OURO FINO - MG</option>
+        <option value="6">PRATÁPOLIS - MG</option>
+        <option value="7">SANTA RITA DO PASSA QUATRO - SP</option>
+        <option value="8">SÃO PAULO - SP</option>
+        <option value="9">BELO HORIZONTE - MG</option>
+        <option value="10">SALVADOR - BA </option>
+    </select>
+  </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-circle-xmark"></i></button>
+          <button type="button" 
+          class="btn btn-success"
+          onclick="salvar()"><i class="fa-solid fa-circle-check"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalExcluir" 
+tabindex="-1" aria-labelledby="exampleModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          CONFIRMAR EXCLUSÃO?            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success"
+          onclick="excluirSim()"><i class="fa-solid fa-circle-check"></i>
+          </button>
+          <button type="button" class="btn btn-danger"
+           data-bs-dismiss="modal"><i class="fa-solid fa-circle-xmark"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $("#txttelefone").mask("(00) 0 0000-0000");
+
+       
+        $("#txtcpf").mask("000.000.000-00");
+
+        
+        $("#txtcep").mask("00000-000");
+
+        $("#perc_comissao").mask("00.00", { reverse: true })
+
+    </script>
+    <script src="vendedor.js"></script>
+    <script src="menu.js"></script>
+    
+  </body>
+</html>
