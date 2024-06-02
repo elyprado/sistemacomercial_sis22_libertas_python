@@ -80,8 +80,11 @@ function novo() {
 
 function alterar(id) {
     idatual = id;
+    console.log(id)
+    console.log("ID", id)
     //carregar os dados do id passado por parâmetro
-    fetch("http://127.0.0.1:3333/venda/"+ id)
+    fetch("http://127.0.0.1:5000/venda/" + id)
+        // http://127.0.0.1:5000/venda
         .then(response => response.json())
         .then(dados => {
             const txtNumeronf = document.getElementById("txtNumeronf");
@@ -116,7 +119,7 @@ function listar() {
     txtpesquisa = document.getElementById("txtpesquisa");
 
 
-    fetch("http://127.0.0.1:3333/venda?pesquisa=" + txtpesquisa.value)
+    fetch("http://127.0.0.1:5000/venda?pesquisa=" + txtpesquisa.value)
         .then(response => response.json())
        .then(dados => mostrar(dados));
     
@@ -180,7 +183,7 @@ function excluir(id) {
 }
 
 function excluirSim() {
-        fetch( "http://127.0.0.1:3333/venda/" + idatual,
+        fetch( "http://127.0.0.1:5000/venda/" + idatual,
             {
                 headers: {
                     "Accept": "application/json",
@@ -222,11 +225,11 @@ function salvar() {
     var metodo;
     if (idatual < 0) {
         //inserir
-        url = "http://127.0.0.1:3333/venda";
+        url = "http://127.0.0.1:5000/venda";
         metodo = "POST";
     } else {
         //alterar
-        url = "http://127.0.0.1:3333/venda/" + idatual;
+        url = "http://127.0.0.1:5000/venda/" + idatual;
         metodo = "PUT"
     }
 
