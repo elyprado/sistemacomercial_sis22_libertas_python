@@ -32,7 +32,7 @@ function novo() {
 function alterar(id) {
     idatual = id;
 
-    fetch("http://127.0.0.1:3333/cliente/" + id)
+    fetch("http://127.0.0.1:5000/cliente/" + id)
         .then(resp => resp.json())
         .then(dados => {
 
@@ -64,7 +64,7 @@ function listar() {
     const txtpesquisa = document.getElementById("txtpesquisa");
 
 
-    fetch("http://127.0.0.1:3333/cliente?pesquisa=" + txtpesquisa.value)
+    fetch("http://127.0.0.1:5000/cliente?pesquisa=" + txtpesquisa.value)
         .then(resp => resp.json())
         .then(dados => mostrar(dados));
 }
@@ -98,7 +98,7 @@ function excluir(id) {
     modalExcluir.show();
 }
 function excluirSim() {
-    fetch("http://127.0.0.1:3333/cliente/" + idatual,
+    fetch("http://127.0.0.1:5000/cliente/" + idatual,
         {
             headers: {
                 'Accept': 'application/json',
@@ -140,10 +140,10 @@ async function salvar() {
     var url;
     var metodo;
     if (idatual <= 0) {
-        url = "http://127.0.0.1:3333/cliente";
+        url = "http://127.0.0.1:5000/cliente";
         metodo = "POST";
     } else {
-        url = "http://127.0.0.1:3333/cliente/" + idatual;
+        url = "http://127.0.0.1:5000/cliente/" + idatual;
         metodo = "PUT";
     }
     fetch(url,
