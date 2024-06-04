@@ -26,7 +26,7 @@ function novo() {
 function alterar(id) {
     idatual = id;
 
-    fetch("http://127.0.0.1:3333/caixa/" + id)
+    fetch("http://127.0.0.1:5000/caixa/" + id)
         .then(resp => resp.json())
         .then(dados => {
             const txtdata = document.getElementById("txtdata");
@@ -52,7 +52,7 @@ function listar() {
     const txtpesquisa = document.getElementById("txtpesquisa");
 
 
-    fetch("http://127.0.0.1:3333/caixa?pesquisa=" + txtpesquisa.value)
+    fetch("http://127.0.0.1:5000/caixa?pesquisa=" + txtpesquisa.value)
         .then(resp => resp.json())
         .then(dados => mostrar(dados));
 }
@@ -86,7 +86,7 @@ function excluir(id) {
     modalExcluir.show();
 }
 function excluirSim() {
-    fetch("http://127.0.0.1:3333/caixa/" + idatual,
+    fetch("http://127.0.0.1:5000/caixa/" + idatual,
         {
             headers: {
                 'Accept': 'application/json',
@@ -109,7 +109,7 @@ function salvar() {
     const txtpesquisa = document.getElementById("txtpesquisa");
 
     var idNovo = 0
-    var todosCl = fetch("http://127.0.0.1:3333/caixa?pesquisa=" + txtpesquisa.value)
+    var todosCl = fetch("http://127.0.0.1:5000/caixa?pesquisa=" + txtpesquisa.value)
         .then(async (resp) => { return await resp.json() })
     console.log('ENTRO AQUI')
     if (todosCl.lenght > 0) {
@@ -136,10 +136,10 @@ function salvar() {
     var url;
     var metodo;
     if (idatual <= 0) {
-        url = "http://127.0.0.1:3333/caixa";
+        url = "http://127.0.0.1:5000/caixa";
         metodo = "POST";
     } else {
-        url = "http://127.0.0.1:3333/caixa/" + idatual;
+        url = "http://127.0.0.1:5000/caixa/" + idatual;
         metodo = "PUT";
     }
     fetch(url,
