@@ -36,7 +36,7 @@ function novo() {
 function alterar(id) {
     idatual = id;
     //carregar os dados do id passado por parametro
-    fetch("http://127.0.0.1:3333/fornecedor/" + id)
+    fetch("http://127.0.0.1:5000/fornecedor/" + id)
     .then(resp => resp.json())
     .then(dados => {
         //preenche os inputs
@@ -62,7 +62,7 @@ function listar() {
     const lista = document.getElementById("lista");
     lista.innerHTML = "<tr><td colspan=11>Carregando...</td></tr>";
 
-    fetch("http://127.0.0.1:3333/fornecedor?pesquisa=" + txtPesquisa.value)
+    fetch("http://127.0.0.1:5000/fornecedor?pesquisa=" + txtPesquisa.value)
     .then(resp => resp.json())
     .then(dados => {
         if (dados == "") {
@@ -109,7 +109,7 @@ function excluir(id) {
 };
 
 function excluirSim() {
-    fetch("http://127.0.0.1:3333/fornecedor/" + idatual,
+    fetch("http://127.0.0.1:5000/fornecedor/" + idatual,
         {
             headers: {
                 'Accept': 'application/json',
@@ -139,7 +139,7 @@ function salvar() {
         bairro: txtBairro.value
     };
 
-    url = "http://127.0.0.1:3333/fornecedor";
+    url = "http://127.0.0.1:5000/fornecedor";
     metodo = "POST";
 
     fetch(url,
@@ -173,7 +173,7 @@ function salvarAlteracao(id) {
         bairro: txtBairro.value
     };
 
-    url = "http://127.0.0.1:3333/fornecedor/" + idatual;
+    url = "http://127.0.0.1:5000/fornecedor/" + idatual;
     metodo = "PUT";
 
     fetch(url,

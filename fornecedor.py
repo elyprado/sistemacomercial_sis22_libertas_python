@@ -103,7 +103,7 @@ def alterar_fornecedor(id):
                        WHERE
                         idfornecedor = %s
                        """, 
-                       (nome, cnpj, logradouro, numero, bairro, cep, telefone, idcidade)
+                       (nome, cnpj, logradouro, numero, bairro, cep, telefone, idcidade, id)
                        )
         conn.commit()
         conn.close()
