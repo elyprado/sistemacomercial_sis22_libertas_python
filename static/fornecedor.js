@@ -62,37 +62,63 @@ function listar() {
     const lista = document.getElementById("lista");
     lista.innerHTML = "<tr><td colspan=11>Carregando...</td></tr>";
 
-    fetch("http://127.0.0.1:5000/fornecedor?pesquisa=" + txtPesquisa.value)
+    // txtPesquisa.value != "" ? url = fetch("http://127.0.0.1:5000/fornecedor/" + txtPesquisa.value) : url = fetch("http://127.0.0.1:5000/fornecedor?pesquisa=")
+    txtPesquisa.value != "" ? url = "http://127.0.0.1:5000/fornecedor/" + txtPesquisa.value : url = "http://127.0.0.1:5000/fornecedor?pesquisa=";
+
+    // fetch("http://127.0.0.1:5000/fornecedor?pesquisa=" + txtPesquisa.value)
+    fetch(url)
     .then(resp => resp.json())
     .then(dados => {
-        if (dados == "") {
+        console.log(dados)
+        if (dados == "" || dados == null) {
             const lista = document.getElementById("lista");
             //limpa a lista
             lista.innerHTML = "";
             lista.innerHTML = "<tr><td colspan='9'>Nenhum registro encontrado</td></tr>";
         } else {
-            mostrar(dados);
+            mostrar(dados, txtPesquisa.value);
         };
     });
 };
 
-function mostrar(dados) {
+function mostrar(dados, pesquisa) {
     const lista = document.getElementById("lista");
     //limpa a lista
     lista.innerHTML = "";
-    //percorre os dados
-    for (var i in dados) {
-        let id = dados[i].idfornecedor;
+
+    if (pesquisa == "") {
+        for (var i in dados) {
+            let id = dados[i].idfornecedor;
+            lista.innerHTML += "<tr>"
+                + "<td>" + id + "</td>"
+                + "<td>" + dados[i].nome + "</td>"
+                + "<td>" + dados[i].cnpj + "</td>"
+                + "<td>" + dados[i].telefone + "</td>"
+                + "<td>" + dados[i].cep + "</td>"
+                + "<td>" + dados[i].idcidade + "</td>"
+                + "<td>" + dados[i].logradouro + "</td>"
+                + "<td>" + dados[i].numero + "</td>"
+                + "<td>" + dados[i].bairro + "</td>"
+                + "<td>"
+                +   "<button type='button' class='btn btn-primary' onclick='alterar("+id+")'>Alterar</button>"
+                + "</td>"
+                + "<td>"
+                +   "<button type='button' class='btn btn-danger' onclick='excluir("+id+")'>Excluir</button>"
+                + "</td>"
+                + "</tr>";
+        }
+    } else {
+        let id = dados.idfornecedor;
         lista.innerHTML += "<tr>"
             + "<td>" + id + "</td>"
-            + "<td>" + dados[i].nome + "</td>"
-            + "<td>" + dados[i].cnpj + "</td>"
-            + "<td>" + dados[i].telefone + "</td>"
-            + "<td>" + dados[i].cep + "</td>"
-            + "<td>" + dados[i].idcidade + "</td>"
-            + "<td>" + dados[i].logradouro + "</td>"
-            + "<td>" + dados[i].numero + "</td>"
-            + "<td>" + dados[i].bairro + "</td>"
+            + "<td>" + dados.nome + "</td>"
+            + "<td>" + dados.cnpj + "</td>"
+            + "<td>" + dados.telefone + "</td>"
+            + "<td>" + dados.cep + "</td>"
+            + "<td>" + dados.idcidade + "</td>"
+            + "<td>" + dados.logradouro + "</td>"
+            + "<td>" + dados.numero + "</td>"
+            + "<td>" + dados.bairro + "</td>"
             + "<td>"
             +   "<button type='button' class='btn btn-primary' onclick='alterar("+id+")'>Alterar</button>"
             + "</td>"
