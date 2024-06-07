@@ -4,6 +4,7 @@ from vendedor import vendedor_bp
 from usuario import usuario_bp
 from marca import marca_bp
 from produto import produto_bp
+from compra import compra_bp
 import os
 
 app = Flask(__name__,   
@@ -14,6 +15,8 @@ app.register_blueprint(vendedor_bp)
 app.register_blueprint(usuario_bp)
 app.register_blueprint(marca_bp)
 app.register_blueprint(produto_bp)
+app.register_blueprint(compra_bp)
+
 
 @app.route("/")
 def home():
