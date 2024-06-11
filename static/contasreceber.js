@@ -13,24 +13,22 @@ function novo() {
     const txtvencimento = document.getElementById("txtvencimento");
     const txtpagamento = document.getElementById("txtpagamento");
     const txtvalorpago = document.getElementById("txtvalorpago");
+    const idcliente = document.getElementById("idcliente");
 
-     
-
-    //limpa os campo
     txtdata.value = "";
     txtvalor.value = "";
     txtvencimento.value = "";
     txtpagamento.value = "";
     txtvalorpago.value = "";
+    idcliente.value = "";
 
-    //abre a dialog
     modal.show();
 }
 
 function alterar(id) {
     idatual = id;
 
-    fetch("http://127.0.0.1:3333/contasreceber/" + id)
+    fetch("http://127.0.0.1:5000/conta_receber/" + id)
     .then(resp => resp.json())
     .then(dados => {
         console.log("Dados brutos recebidos para alteração:", dados);
@@ -40,12 +38,14 @@ function alterar(id) {
         const txtvencimento = document.getElementById("txtvencimento");
         const txtpagamento = document.getElementById("txtpagamento");
         const txtvalorpago = document.getElementById("txtvalorpago");
+        const idcliente = document.getElementById("idcliente");
 
         txtdata.value = new Date(dados.data).toISOString().split('T')[0];
         txtvalor.value = dados.valor;
         txtvencimento.value = new Date(dados.vencimento).toISOString().split('T')[0];
         txtpagamento.value = new Date(dados.pagamento).toISOString().split('T')[0];
         txtvalorpago.value = dados.valorpago;
+        idcliente.value = dados.idcliente;
 
         modal.show();
     });
@@ -54,18 +54,23 @@ function alterar(id) {
 
 function listar() {
     const lista = document.getElementById("lista");
-    lista.innerHTML = "<tr><td colspan=5>Carregando...</td></tr>";
+    lista.innerHTML = "<tr><td colspan=7>Carregando...</td></tr>";
 
     const txtpesquisa = document.getElementById("txtpesquisa");
-
-
-    fetch("http://127.0.0.1:3333/contasreceber?pesquisa=" + txtpesquisa.value)
+    
+    fetch("http://127.0.0.1:5000/conta_receber?pesquisa=" + txtpesquisa.value)
     .then(resp => resp.json())
     .then(dados => {
         console.log("Dados brutos recebidos do servidor:", dados);
         mostrar(dados);
-});
+    })
+    .catch(error => {
+        console.error('Erro ao listar contas a receber:', error);
+        lista.innerHTML = "<tr><td colspan=7>Erro ao carregar dados.</td></tr>";
+    });
 }
+
+
 
 function mostrar(dados) {
     const lista = document.getElementById("lista");
@@ -74,7 +79,7 @@ function mostrar(dados) {
     for (var i in dados) {
         let id = dados[i].idreceber;
 
- 
+
         const data = new Date(dados[i].data);
         const dataFormatada = data.toLocaleDateString('pt-BR');
 
@@ -91,7 +96,8 @@ function mostrar(dados) {
             + "<td>" + vencimentoFormatada + "</td>" 
             + "<td>" + pagamentoFormatada + "</td>" 
             + "<td>" + dados[i].valorpago + "</td>"
-            +"<td>"
+            + "<td>" + dados[i].idcliente + "</td>"
+            + "<td>"
             + "<button type='button' class='btn btn-primary' onclick='alterar(" + id + ")'>"
             + "<i class='bi bi-pencil'></i>" 
             + "</button>"+"&nbsp;"
@@ -107,47 +113,47 @@ function excluir(id) {
     idatual = id;
     modalExcluir.show();
 }
+
 function excluirSim() {
-    fetch("http://127.0.0.1:3333/contasreceber/" + idatual,
+    fetch("http://127.0.0.1:5000/conta_receber/" + idatual,
         {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                },
+            },
             method: "DELETE", 
             body: ""
         }
     ).then(() => {
-        
         modalExcluir.hide();
         listar();
     })
 }
+
 function salvar() {
-        const txtdata = document.getElementById("txtdata");
-        const txtvalor = document.getElementById("txtvalor");
-        const txtvencimento = document.getElementById("txtvencimento");
-        const txtpagamento = document.getElementById("txtpagamento");
-        const txtvalorpago = document.getElementById("txtvalorpago");
-
-
+    const txtdata = document.getElementById("txtdata");
+    const txtvalor = document.getElementById("txtvalor");
+    const txtvencimento = document.getElementById("txtvencimento");
+    const txtpagamento = document.getElementById("txtpagamento");
+    const txtvalorpago = document.getElementById("txtvalorpago");
+    const idcliente = document.getElementById("idcliente");
 
     const dados = {
         data: txtdata.value,
         valor: txtvalor.value,
         vencimento: txtvencimento.value, 
         pagamento: txtpagamento.value,
-        valorpago: txtvalorpago.value, 
-
+        valorpago: txtvalorpago.value,
+        idcliente: idcliente.value
     }
 
     var url;
     var metodo;
-    if (idatual<=0) {
-        url = "http://127.0.0.1:3333/contasreceber";
+    if (idatual <= 0) {
+        url = "http://127.0.0.1:5000/conta_receber";
         metodo = "POST";
     } else {
-        url = "http://127.0.0.1:3333/contasreceber/" + idatual;
+        url = "http://127.0.0.1:5000/conta_receber/" + idatual;
         metodo = "PUT";
     }
     fetch(url,
@@ -155,15 +161,17 @@ function salvar() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                },
+            },
             method: metodo, 
             body: JSON.stringify(dados)
         }
     ).then(() => {
         modal.hide();
         listar();
-    })
+  
+  })
 
 }
+
 
 listar();
