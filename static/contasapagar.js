@@ -54,7 +54,7 @@ function listar() {
     const txtpesquisa = document.getElementById("txtpesquisa");
 
 
-    fetch("http://127.0.0.1:3333/contasapagar?pesquisa=" + txtpesquisa.value)
+    fetch("http://127.0.0.1:5000/contasapagar?pesquisa=" + txtpesquisa.value)
     .then(resp => resp.json())
     .then(dados => mostrar(dados));
 }
@@ -99,13 +99,13 @@ function excluir(id) {
     modalExcluir.show();
 }
 function excluirSim() {
-    fetch("http://127.0.0.1:3333/contasapagar/" + idatual,
+    fetch("http://127.0.0.1:5000/contasapagar/" + idatual,
         {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
-            method: "DELETE", 
+            method: "DELETE",
             body: ""
         }
     ).then(() => {
@@ -123,7 +123,7 @@ function salvar() {
     const txtpag = document.getElementById("txtpag");
     const txtvpag = document.getElementById("txtvpag");
     const opc = document.getElementById("opcFornecedor")
-    
+
 
     const dados = {
         "idpagar":nmbN.value,
@@ -139,11 +139,11 @@ function salvar() {
     var metodo;
     if (idatual<=0) {
         //inserir
-        url = "http://127.0.0.1:3333/contasapagar/";
+        url = "http://127.0.0.1:5000/contasapagar/";
         metodo = "POST";
     } else {
         //alterar
-        url = "http://127.0.0.1:3333/contasapagar/" + idatual;
+        url = "http://127.0.0.1:5000/contasapagar/" + idatual;
         metodo = "PUT";
     }
     fetch(url,
@@ -152,7 +152,7 @@ function salvar() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
-            method: metodo, 
+            method: metodo,
             body: JSON.stringify(dados)
         }
     ).then(() => {
