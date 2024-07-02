@@ -42,23 +42,26 @@ def getbyid_usuario(id):
 @contaspagar_bp.route("/contasapagar", methods=["POST"])
 def novo_usuario():
     try:
-        usuario = request.json
+        conta = request.json
         conn = connect_db()
         cursor = conn.cursor()
 
         # pegar os dados do JSON
-        nome = usuario["nome"]
-        email = usuario["email"]
-        senha = usuario["senha"]
-        telefone = usuario["telefone"]
-
+        idpagar = conta["idpagar"]
+        data = conta["data"]
+        valor = conta["valor"]
+        vencimento = conta["vencimento"]
+        pagamento = conta["vencimento"]
+        valorpago = conta["valorpago"]
+        idfornecedor = conta["idfornecedor"]
         # insere no BD
         cursor.execute("""
-                        INSERT INTO 
-                       (nome, email, senha, telefone)
-                       VALUES (%s, %s, %s, %s)
+                        INSERT INTO conta_pagar
+                       (idpagar, data, valor, vencimento, pagamento, valorpago, idfornecedor)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s)
+                       
                        """,
-                       (nome, email, senha, telefone)
+                       (idpagar, data, valor, vencimento, pagamento, valorpago, idfornecedor)
                        )
         conn.commit()
         conn.close()
@@ -72,24 +75,30 @@ def novo_usuario():
 @contaspagar_bp.route("/contasapagar/<id>", methods=["PUT"])
 def alterar_usuario(id):
     try:
-        usuario = request.json
+        print("PUT")
+        conta = request.json
+        print(conta)
         conn = connect_db()
         cursor = conn.cursor()
 
         # pegar os dados do JSON
-        nome = usuario["nome"]
-        email = usuario["email"]
-        senha = usuario["senha"]
-        telefone = usuario["telefone"]
+        idpagar =id
+        data = conta["data"]
+        valor = conta["valor"]
+        vencimento = conta["vencimento"]
+        pagamento = conta["vencimento"]
+        valorpago = conta["valorpago"]
+        idfornecedor = conta["idfornecedor"]
 
         # insere no BD
         cursor.execute("""
-                        UPDATE usuario
-                       SET nome = %s, email = %s, 
-                       senha = %s, telefone = %s
-                       WHERE idusuario = %s
+                        UPDATE conta_pagar
+                       SET  data = %s, 
+                       vencimento = %s, pagamento = %s, valor = %s, valorpago = %s,
+                        idfornecedor = %s
+                       WHERE idpagar = %s
                        """,
-                       (nome, email, senha, telefone, id)
+                       (data, vencimento, pagamento, valor, valorpago, idfornecedor, id)
                        )
         conn.commit()
         conn.close()
@@ -108,8 +117,8 @@ def excluir_usuario(id):
 
         # insere no BD
         cursor.execute("""
-                        DELETE FROM usuario
-                       WHERE idusuario = %s
+                        DELETE FROM conta_pagar
+                       WHERE idpagar = %s
                        """,
                        (id)
                        )
