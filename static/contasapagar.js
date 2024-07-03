@@ -25,7 +25,7 @@ function novo() {
 function alterar(id) {
     idatual = id;
     //carregar os dados do id passado por parametro
-    fetch("http://127.0.0.1:3333/contasapagar/" + id)
+    fetch("http://127.0.0.1:5000/contasapagar/" + id)
     .then(resp => resp.json())
     .then(dados => {
         console.log('Dados retornados do servidor:', dados)
@@ -34,14 +34,20 @@ function alterar(id) {
         const txtdata = document.getElementById("txtdata");
         const txtvalor = document.getElementById("txtvalor");
         const txtvenc = document.getElementById("txtvenc");
-        const txtpag = document.getElementById("txtpag");
-        const data = formatar_data(dados.data)
-        const venc = formatar_data(dados.vencimento)
+        const txtpag = document.getElementById("txtpag")
+        const nforn = document.getElementById("idfornecedor")
+        const dataBarra = data_barra(dados.data)
+        const vencimento = data_barra(dados.vencimento)
+        console.log(dataBarra)
+        const venc = data_barra(dados.vencimento)
+        const pag = data_barra(dados.pagamento)
         nmbN.value = dados.idpagar;
-        txtdata.value = data;
+        txtdata.value = dataBarra;
         txtvalor.value = dados.valor;
         txtvenc.value = venc;
-        txtpag.value = dados.pagamento;
+        txtpag.value = pag;
+        //nforn.value = dados.idfornecedor
+
 
         //mostra a dialog para alterar
         modal.show();
@@ -164,12 +170,18 @@ function salvar() {
 
 }
 
-function formatar_data(data){
-    data = data.substring(0,10)
-    return data
+
+
+function data_barra(data){
+    month = data.substring(8,11)
+    switch (month){
+        case 'Jun':
+            month_n = '06'
+    }
+    day = data.substring(5,7)
+    year = data.substring(12,16)
+    return year + '-' + month_n + '-' + day
 }
-
-
 
 listar();
 
